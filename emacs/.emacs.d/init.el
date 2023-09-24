@@ -93,6 +93,11 @@
 (add-hook 'org-mode-hook 'auto-fill-mode)
 (add-hook 'org-mode-hook (lambda () (setq fill-column 80)))
 
+;; Enable auto-fill-mode for text-mode files and set fill column to 80
+(add-hook 'text-mode-hook (lambda () (auto-fill-mode 1) (setq fill-column 80)))
+(add-hook 'text-mode-hook 'auto-fill-mode)
+(add-hook 'text-mode-hook (lambda () (setq fill-column 80)))
+
 (add-hook 'org-mode-hook 'org-indent-mode)
 
 (use-package org-bullets
@@ -116,6 +121,7 @@
   :ensure t)
 
 ;; Enable LanguageTool in text-mode and markdown-mode
+(add-hook 'text-mode-hook (lambda () (languagetool-server-mode)))
 (add-hook 'markdown-mode-hook (lambda () (languagetool-server-mode)))
 (add-hook 'org-mode-hook (lambda () (languagetool-server-mode)))
 
