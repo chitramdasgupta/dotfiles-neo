@@ -120,8 +120,7 @@
 (use-package languagetool
   :ensure t)
 
-;; Enable LanguageTool in text-mode and markdown-mode
-(add-hook 'text-mode-hook (lambda () (languagetool-server-mode)))
+;; Enable LanguageTool in markdown-mode and org-mode
 (add-hook 'markdown-mode-hook (lambda () (languagetool-server-mode)))
 (add-hook 'org-mode-hook (lambda () (languagetool-server-mode)))
 
