@@ -23,6 +23,9 @@
 (when (file-exists-p custom-file)
   (load custom-file))
 
+;; Disable emacs version-control
+(setq vc-handled-backends nil)
+
 ;; Change yes-or-no to y-or-n
 (setq use-short-answers t)
 
