@@ -22,6 +22,9 @@ source /usr/share/nvm/init-nvm.sh
 export PATH="$PATH:$HOME/.rvm/bin"
 source ~/.rvm/scripts/rvm
 
+# Starship as the init prompt
+eval "$(starship init zsh)"
+
 # Auto suggestions
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 

@@ -1,0 +1,4 @@
+format = "🚀$all"
+
+[cmd_duration]
+disabled = true
