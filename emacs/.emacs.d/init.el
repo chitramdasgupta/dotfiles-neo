@@ -68,6 +68,12 @@
 ;; (setq evil-visual-state-cursor '("orange" hbar))
 (blink-cursor-mode -1)
 
+;; Use rainbow delimeters
+(use-package rainbow-delimiters
+  :ensure t)
+
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+
 ;; Minibuffer
 (setq enable-recursive-minibuffers t)
 
