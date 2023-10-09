@@ -52,11 +52,20 @@
 (set-frame-font "Iosevka Comfy Motion 16" nil t)
 
 ;; Theme
-(load-theme 'modus-vivendi)
+(use-package modus-themes
+  :ensure t)
 
-(setq evil-normal-state-cursor '("orange" box))
-(setq evil-insert-state-cursor '("orange" bar))
-(setq evil-visual-state-cursor '("orange" hbar))
+;; Make the mode-line border of the same color as the background
+(setq modus-themes-common-palette-overrides
+      '((border-mode-line-active unspecified)
+        (border-mode-line-inactive unspecified)))
+
+(load-theme 'modus-vivendi-tinted)
+
+;; I prefer to use an orange cursor with the modus-vivendi theme
+;; (setq evil-normal-state-cursor '("orange" box))
+;; (setq evil-insert-state-cursor '("orange" bar))
+;; (setq evil-visual-state-cursor '("orange" hbar))
 (blink-cursor-mode -1)
 
 ;; Minibuffer
