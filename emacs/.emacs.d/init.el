@@ -24,6 +24,9 @@
 ;; Disable emacs version-control
 (setq vc-handled-backends nil)
 
+;; Disable unnecessary resizing
+(setq frame-inhibit-implied-resize t)
+
 ;; Change yes-or-no to y-or-n
 (setq use-short-answers t)
 
@@ -112,6 +115,8 @@
 (add-hook 'text-mode-hook (lambda () (setq fill-column 80)))
 
 (add-hook 'org-mode-hook 'org-indent-mode)
+
+(setq sentence-end-double-space nil)
 
 (use-package org-bullets
   :ensure t)
