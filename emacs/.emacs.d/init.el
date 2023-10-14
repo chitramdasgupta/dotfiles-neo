@@ -99,20 +99,23 @@
 (use-package markdown-mode
   :ensure t)
 
-;; Enable auto-fill-mode for Markdown files and set fill column to 80
-(add-hook 'markdown-mode-hook (lambda () (auto-fill-mode) (setq fill-column 80)))
-(add-hook 'markdown-mode-hook 'auto-fill-mode)
-(add-hook 'markdown-mode-hook (lambda () (setq fill-column 80)))
+(setq-default fill-column 80)
 
-;; Enable auto-fill-mode for Org-mode files and set fill column to 80
-(add-hook 'org-mode-hook (lambda () (auto-fill-mode 1) (setq fill-column 80)))
-(add-hook 'org-mode-hook 'auto-fill-mode)
-(add-hook 'org-mode-hook (lambda () (setq fill-column 80)))
-
-;; Enable auto-fill-mode for text-mode files and set fill column to 80
-(add-hook 'text-mode-hook (lambda () (auto-fill-mode 1) (setq fill-column 80)))
-(add-hook 'text-mode-hook 'auto-fill-mode)
+;; Hard text-wrapping occurs after 80 characters for programming and git commits
 (add-hook 'text-mode-hook (lambda () (setq fill-column 80)))
+(add-hook 'programming-mode-hook (lambda () (setq fill-column 80)))
+
+(use-package visual-fill-column
+  :ensure t)
+
+;; Soft text-wrapping occurs after 80 characters
+(setq-default visual-fill-column-width 80)
+
+;; Centers the text
+(setq-default visual-fill-column-center-text t)
+
+(add-hook 'org-mode-hook #'visual-fill-column-mode)
+(add-hook 'markdown-mode-hook #'visual-fill-column-mode)
 
 (add-hook 'org-mode-hook 'org-indent-mode)
 
