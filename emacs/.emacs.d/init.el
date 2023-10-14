@@ -153,6 +153,10 @@
 ;; For encryption and decryption
 (setq epa-file-cache-passphrase-for-symmetric-encryption t)
 
+;; For encrypting files
+(require 'epa-file)
+(epa-file-enable)
+
 ;; Magit - the git porcelain
 (use-package magit
   :ensure t)
