@@ -150,6 +150,16 @@
 (add-hook 'markdown-mode-hook (lambda () (add-hook 'before-save-hook 'delete-trailing-whitespace)))
 (add-hook 'org-mode-hook (lambda () (add-hook 'before-save-hook 'delete-trailing-whitespace)))
 
+;; Toggle between showing and hiding emphasis markers
+(defun org-toggle-emphasis ()
+  "Toggle hiding/showing of org emphasize markers."
+  (interactive)
+  (if org-hide-emphasis-markers
+      (setq org-hide-emphasis-markers nil)
+    (setq org-hide-emphasis-markers t))
+ (org-mode-restart))
+(define-key org-mode-map (kbd "C-c e") 'org-toggle-emphasis)
+
 ;; For <s TAB completions
 (require 'org-tempo)
 
