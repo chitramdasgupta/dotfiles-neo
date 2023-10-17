@@ -162,6 +162,8 @@
 (add-hook 'org-mode-hook (lambda () (add-hook 'before-save-hook 'delete-trailing-whitespace)))
 
 ;; Toggle between showing and hiding emphasis markers
+(setq org-hide-emphasis-markers t)
+
 (defun org-toggle-emphasis ()
   "Toggle hiding/showing of org emphasize markers."
   (interactive)
