@@ -137,13 +137,24 @@
 (setq org-edit-src-content-indentation 0)
 
 ;; Grammar and spellcheck
-;; Requires languagetool to be installed and enabled as a systemd service
-(use-package languagetool
+;; Set up vale for spell-check and grammar-check
+(use-package flycheck
   :ensure t)
 
-;; Enable LanguageTool in markdown-mode and org-mode
-(add-hook 'markdown-mode-hook (lambda () (languagetool-server-mode)))
-(add-hook 'org-mode-hook (lambda () (languagetool-server-mode)))
+(add-hook 'org-mode-hook 'flycheck-mode)
+(add-hook 'markdown-mode-hook 'flycheck-mode)
+(add-hook 'text-mode-hook 'flycheck-mode)
+
+(flycheck-define-checker vale
+  "A checker for prose"
+  :command ("vale" "--output" "line" source)
+  :standard-input nil
+  :error-patterns
+  ((error line-start (file-name) ":" line ":" column ":" (id (one-or-more (not (any ":")))) ":" (message) line-end))
+  :modes (markdown-mode org-mode text-mode)
+ )
+
+(add-to-list 'flycheck-checkers 'vale 'append)
 
 ;; Delete trailing whitespace on save
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
