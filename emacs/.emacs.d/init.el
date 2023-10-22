@@ -71,6 +71,16 @@
 ;; (setq evil-visual-state-cursor '("orange" hbar))
 (blink-cursor-mode -1)
 
+;; Customize dired
+;; Adding some colors
+(use-package diredfl
+  :ensure t)
+
+(add-hook 'dired-mode-hook #'diredfl-mode)
+
+;; Human-readable file-sizes
+(setq dired-listing-switches "-alh")
+
 ;; Use rainbow delimeters
 (use-package rainbow-delimiters
   :ensure t)
