@@ -117,11 +117,8 @@
 (use-package markdown-mode
   :ensure t)
 
-(setq-default fill-column 80)
-
-;; Hard text-wrapping occurs after 80 characters for programming and git commits
+;; Hard text-wrapping occurs after 80 characters for git commits
 (add-hook 'text-mode-hook (lambda () (setq fill-column 80)))
-(add-hook 'programming-mode-hook (lambda () (setq fill-column 80)))
 
 (use-package visual-fill-column
   :ensure t)
