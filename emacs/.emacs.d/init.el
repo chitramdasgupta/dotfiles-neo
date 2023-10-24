@@ -51,6 +51,14 @@
   (setq evil-want-C-i-jump nil)
   (evil-mode 1))
 
+;; DWIM (Do What I Mean) editing
+(use-package typo
+  :ensure t)
+
+(add-hook 'text-mode-hook 'typo-mode)
+(add-hook 'org-mode-hook 'typo-mode)
+(add-hook 'markdown-mode-hook 'typo-mode)
+
 ;; Font setup
 (set-frame-font "Iosevka Comfy Motion 16" nil t)
 
