@@ -201,6 +201,9 @@
 (require 'epa-file)
 (epa-file-enable)
 
+;; Set up org agenda
+(setq org-agenda-files '("~/Documents/emacs/agenda"))
+
 ;; Magit - the git porcelain
 (use-package magit
   :ensure t)
