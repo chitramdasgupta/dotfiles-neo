@@ -123,8 +123,8 @@
 (use-package visual-fill-column
   :ensure t)
 
-;; Soft text-wrapping occurs after 80 characters
-(setq-default visual-fill-column-width 80)
+;; Soft text-wrapping occurs after 90 characters
+(setq-default visual-fill-column-width 90)
 
 ;; Centers the text
 (setq-default visual-fill-column-center-text t)
