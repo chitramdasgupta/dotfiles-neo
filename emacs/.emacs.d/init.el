@@ -206,6 +206,8 @@
   :ensure t)
 
 (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)
+(setq magit-diff-refine-hunk t)
+(setq magit-diff-refine-ignore-whitespace nil)
 
 ;; Better completion for minibuffer commands
 (use-package vertico
