@@ -11,7 +11,8 @@ HISTSIZE=2000
 SAVEHIST=2000
 HISTFILE=~/.histfile
 
-alias ls='ls --color=yes --human-readable'
+# alias ls='ls --color=yes --human-readable'
+alias ls='eza'
 alias code='code --password-store=basic'
 
 export EDITOR=vim
