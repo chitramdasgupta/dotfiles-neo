@@ -9,12 +9,36 @@
 
 ;; Setup emacs default package manager: package.el
 (require 'package)
-(add-to-list 'package-archives
-        '("melpa" . "http://melpa.org/packages/"))
+(dolist (repo '(("melpa"        . "http://melpa.org/packages/")
+                ("gnu"          . "https://elpa.gnu.org/packages/")
+                ("nongnu"       . "https://elpa.nongnu.org/nongnu/")))
+  (add-to-list 'package-archives repo))
 (package-initialize)
+
+;; Install use-package if not already installed
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+;; Load use-package
+(eval-when-compile
+  (require 'use-package))
+
+(setq package-install-upgrade-built-in t)
 
 ;; Disable creating backup files (the ones ending with ~)
 (setq make-backup-files nil)
+
+;; Use utf-8 everywhere
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-selection-coding-system 'utf-8)
+(set-file-name-coding-system 'utf-8)
+(set-clipboard-coding-system 'utf-8)
+;;(set-w32-system-coding-system 'utf-8)
+(set-buffer-file-coding-system 'utf-8)
 
 ;; Specifying a custom file for emacs to write into
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
@@ -74,9 +98,9 @@
 (load-theme 'modus-vivendi-tinted)
 
 ;; I prefer to use an orange cursor with the modus-vivendi theme
-;; (setq evil-normal-state-cursor '("orange" box))
-;; (setq evil-insert-state-cursor '("orange" bar))
-;; (setq evil-visual-state-cursor '("orange" hbar))
+(setq evil-normal-state-cursor '("orange" box))
+(setq evil-insert-state-cursor '("orange" bar))
+(setq evil-visual-state-cursor '("orange" hbar))
 (blink-cursor-mode -1)
 
 ;; Customize dired
@@ -151,26 +175,6 @@
 (setq org-src-preserve-indentation nil)
 (setq org-edit-src-content-indentation 0)
 
-;; Grammar and spellcheck
-;; Set up vale for spell-check and grammar-check
-(use-package flycheck
-  :ensure t)
-
-(add-hook 'org-mode-hook 'flycheck-mode)
-(add-hook 'markdown-mode-hook 'flycheck-mode)
-(add-hook 'text-mode-hook 'flycheck-mode)
-
-(flycheck-define-checker vale
-  "A checker for prose"
-  :command ("vale" "--output" "line" source)
-  :standard-input nil
-  :error-patterns
-  ((error line-start (file-name) ":" line ":" column ":" (id (one-or-more (not (any ":")))) ":" (message) line-end))
-  :modes (markdown-mode org-mode text-mode)
- )
-
-(add-to-list 'flycheck-checkers 'vale 'append)
-
 ;; Delete trailing whitespace on save
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (add-hook 'markdown-mode-hook (lambda () (add-hook 'before-save-hook 'delete-trailing-whitespace)))
@@ -220,6 +224,14 @@
 (setq read-file-name-completion-ignore-case t)
 (setq read-buffer-completion-ignore-case t)
 
+(use-package orderless
+  :ensure t
+  :init
+  (setq completion-styles '(orderless basic)
+        orderless-matching-styles '(orderless-initialism
+                                    orderless-literal
+                                    orderless-regexp)))
+
 ;; Display annotations for the available commands in the minibuffer
 (use-package marginalia
   :ensure t
@@ -233,3 +245,19 @@
 
 (custom-set-faces
   '(mode-line ((t (:family "Iosevka Comfy Motion" :height 0.9)))))
+
+;; Haskell programming
+(use-package haskell-mode
+  :ensure t)
+
+;; Make haskell-mode work with a ghcup install
+(let ((my-ghcup-path (expand-file-name "~/.ghcup/bin")))
+  (setenv "PATH" (concat my-ghcup-path ":" (getenv "PATH")))
+  (add-to-list 'exec-path my-ghcup-path))
+
+;; Enable literate programming using org-mode
+(org-babel-do-load-languages
+  'org-babel-load-languages
+  '((haskell . t)))
+
+(setq org-confirm-babel-evaluate nil)
