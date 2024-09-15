@@ -35,5 +35,8 @@ eval "$(starship init zsh)"
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
 
+# Auto-complete
+source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
 # This should be at the end
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
