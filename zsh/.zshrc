@@ -28,12 +28,24 @@ hf() {
   print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed -E 's/ *[0-9]*\*? *//' | sed -E 's/\\/\\\\/g')
 }
 
+export PATH="/usr/sbin:$PATH"
+
 alias nvim='~/nvim.appimage'
+alias cat='batcat -p'
+alias ls="eza --icons='always'"
 
 eval "$(starship init zsh)"
 
+eval "$(zoxide init zsh)"
+
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
+
+# JAVA_HOME
+export JAVA_HOME="/home/cdg/.jdks/jdk-21.0.2/"
+
+# Add Java bin directory to PATH
+export PATH="$PATH:/home/cdg/.jdks/jdk-21.0.2/bin/"
 
 # Auto-complete
 source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
