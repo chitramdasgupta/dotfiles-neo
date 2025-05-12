@@ -7,12 +7,15 @@ wezterm.on("gui-startup", function()
 end)
 
 local config = wezterm.config_builder()
+
 --
 --
 
 -- config.font = wezterm.font("JetBrainsMono Nerd Font")
-config.font = wezterm.font("BerkeleyMono")
-config.default_prog = { "/usr/bin/zsh" }
+-- config.font = wezterm.font("BerkeleyMono")
+config.font = wezterm.font("Aporetic Sans Mono")
+config.font_size = 15
+config.default_prog = { "/usr/bin/fish" }
 
 config.color_scheme = "rose-pine"
 -- config.color_scheme = "rose-pine-dawn" -- Light theme

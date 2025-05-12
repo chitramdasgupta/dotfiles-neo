@@ -50,5 +50,9 @@ export PATH="$PATH:/home/cdg/.jdks/jdk-21.0.2/bin/"
 # Auto-complete
 source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
+eval "$(rbenv init -)"
+
+eval "$(~/.local/bin/mise activate zsh)"
+
 # This should be at the end
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

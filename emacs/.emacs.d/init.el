@@ -15,11 +15,6 @@
   (add-to-list 'package-archives repo))
 (package-initialize)
 
-;; Install use-package if not already installed
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-
 ;; Load use-package
 (eval-when-compile
   (require 'use-package))
@@ -31,14 +26,6 @@
 
 ;; Use utf-8 everywhere
 (prefer-coding-system 'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-(set-selection-coding-system 'utf-8)
-(set-file-name-coding-system 'utf-8)
-(set-clipboard-coding-system 'utf-8)
-;;(set-w32-system-coding-system 'utf-8)
-(set-buffer-file-coding-system 'utf-8)
 
 ;; Specifying a custom file for emacs to write into
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
@@ -84,7 +71,8 @@
 (add-hook 'markdown-mode-hook 'typo-mode)
 
 ;; Font setup
-(set-frame-font "Iosevka Comfy Motion 16" nil t)
+(set-frame-font "BerkeleyMono 15" nil t)
+(set-frame-font "Aporetic Sans Mono 15" nil t)
 
 ;; Theme
 (use-package modus-themes
@@ -134,6 +122,7 @@
 (setq display-line-numbers-type 'relative)
 
 (add-hook 'emacs-lisp-mode-hook 'display-line-numbers-mode)
+(add-hook 'clojure-mode-hook 'display-line-numbers-mode)
 
 (setq column-number-mode t)
 
@@ -148,7 +137,7 @@
   :ensure t)
 
 ;; Soft text-wrapping occurs after 90 characters
-(setq-default visual-fill-column-width 90)
+(setq-default visual-fill-column-width 120)
 
 ;; Centers the text
 (setq-default visual-fill-column-center-text t)
@@ -168,12 +157,42 @@
 (use-package toc-org
   :ensure t)
 
+(use-package markdown-toc
+  :ensure t)
+;; To add a table contents simply add a heading with the content, :TOC:, and
+;; then save the file
+
 (add-hook 'org-mode-hook 'toc-org-mode)
 (add-hook 'markdown-mode-hook 'toc-org-mode)
 
 ;; Sensible defaults for the source code blocks
 (setq org-src-preserve-indentation nil)
 (setq org-edit-src-content-indentation 0)
+
+;; Org-mode increase size of latex preview
+(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.75))
+
+;; Org roam
+(use-package org-roam
+ :ensure t
+ :custom
+  (org-roam-directory (file-truename "~/Documents/zettelkasten"))
+ :bind (("C-c n l" . org-roam-buffer-toggle)
+        ("C-c n f" . org-roam-node-find)
+        ("C-c n g" . org-roam-graph)
+        ("C-c n i" . org-roam-node-insert)
+        ("C-c n c" . org-roam-capture))
+ :config
+(setq org-roam-node-display-template (concat "${title:*}" (propertize "${tags:10}" 'face 'org-tag)))
+(org-roam-db-autosync-mode))
+
+(use-package org-roam-ui
+    :after org-roam
+    :config
+    (setq org-roam-ui-sync-theme t
+          org-roam-ui-follow t
+          org-roam-ui-update-on-save t
+          org-roam-ui-open-on-start t))
 
 ;; Delete trailing whitespace on save
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -194,6 +213,15 @@
 
 ;; For <s TAB completions
 (require 'org-tempo)
+
+;; Support Adding UML diagrams in org-mode
+(setq org-plantuml-exec-mode 'plantuml)
+(setq org-plantuml-command "/usr/bin/plantuml")
+(setq org-babel-plantuml-command "/usr/bin/plantuml")
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((plantuml . t)))
 
 ;; For encryption and decryption
 (setq epa-file-cache-passphrase-for-symmetric-encryption t)
@@ -244,7 +272,8 @@
   :init (doom-modeline-mode 1))
 
 (custom-set-faces
-  '(mode-line ((t (:family "Iosevka Comfy Motion" :height 0.9)))))
+  ;; '(mode-line ((t (:family "Iosevka Comfy Motion" :height 0.9)))))
+  '(mode-line ((t (:family "BerkeleyMono" :height 1.0)))))
 
 ;; Haskell programming
 (use-package haskell-mode
@@ -261,3 +290,12 @@
   '((haskell . t)))
 
 (setq org-confirm-babel-evaluate nil)
+
+(setenv "PATH" (concat (getenv "PATH") ":/usr/bin/"))
+
+;; Clojure setup
+(use-package clojure-mode
+  :ensure t)
+
+(use-package cider
+  :ensure t)
